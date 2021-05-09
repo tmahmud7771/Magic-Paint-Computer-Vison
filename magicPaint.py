@@ -49,13 +49,29 @@ def findColors(img,myColors):
         lower = np.array(c[1:4])  #lower range values array
         upper = np.array(c[4:7])  #Upper range values array
         mask = cv.inRange(imgHSV,lower,upper) #mask photo b&ws
-        cv.imshow((c[0]),mask)
+        # cv.imshow((c[0]),mask)
+        getContours(mask)
+
+#Contoures method
+
+def getContours(img):
+    contours,hierarchy = cv.findContours(img,cv.RETR_EXTERNAL,
+    cv.CHAIN_APPROX_NONE) #rete_ex is for fining the outer part of shape
+
+    for cnt in contours:
+        area = cv.contourArea(cnt)
+        if area > 500: #we will detect shape avobe 500 area , in this we can we won't detect nosied area
+            cv.drawContours(imgResult,cnt,-1,(255,0,255),3)
+            param = cv.arcLength(cnt,True)  
+            aprox = cv.approxPolyDP(cnt,0.02*param,True) #its a array .inside this array we have all the individual corner values  
+            x, y, w, h = cv.boundingRect(aprox) #it will help to create a box aroud the shape for detect the shape it has 4 values
 
 
 while True:
     isTrue, img = cap.read()
+    imgResult = img.copy()
     findColors(img,myColors)
-    cv.imshow("Display", img)
+    cv.imshow("Display", imgResult)
     if cv.waitKey(1) & 0xFF == ord('f'):
         break
 
