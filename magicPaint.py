@@ -37,7 +37,7 @@ def stackImages(scale,imgArray):
     return ver
 
 
-myColors = [["orange",0,100,53,56,255,255,(0,0,255)], #orange [0] =name 1:4 => h_min-s_min-v_min 4:7 => h_max-s_max-v_max
+myColors = [["orange",0,100,53,56,255,255,(0,0,255)], #orange [0] =name 1:4 => h_min-s_min-v_min 4:7 => h_max-s_max-v_max [7] = pointer color
             ["blue",39,119,0,179,255,255,(255,165,0)],    
             ["green",24,48,0,107,113,95,(0,128,0)]] 
 
