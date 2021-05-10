@@ -37,9 +37,9 @@ def stackImages(scale,imgArray):
     return ver
 
 
-myColors = [["orange",0,100,53,56,255,255], #orange [0] =name 1:4 => h_min-s_min-v_min 4:7 => h_max-s_max-v_max
-            ["blue",39,119,0,179,255,255],    
-            ["green",24,48,0,107,113,95]] 
+myColors = [["orange",0,100,53,56,255,255,(0,0,255)], #orange [0] =name 1:4 => h_min-s_min-v_min 4:7 => h_max-s_max-v_max
+            ["blue",39,119,0,179,255,255,(255,165,0)],    
+            ["green",24,48,0,107,113,95,(0,128,0)]] 
 
 
 #find colors method
@@ -50,22 +50,23 @@ def findColors(img,myColors):
         upper = np.array(c[4:7])  #Upper range values array
         mask = cv.inRange(imgHSV,lower,upper) #mask photo b&ws
         # cv.imshow((c[0]),mask)
-        getContours(mask)
+        x,y = getContours(mask)
+        cv.circle(imgResult,(x,y),8,c[7],cv.FILLED)
 
 #Contoures method
 
 def getContours(img):
     contours,hierarchy = cv.findContours(img,cv.RETR_EXTERNAL,
     cv.CHAIN_APPROX_NONE) #rete_ex is for fining the outer part of shape
-
+    x, y, w, h = 0,0,0,0
     for cnt in contours:
         area = cv.contourArea(cnt)
         if area > 500: #we will detect shape avobe 500 area , in this we can we won't detect nosied area
-            cv.drawContours(imgResult,cnt,-1,(255,0,255),3)
+            # cv.drawContours(imgResult,cnt,-1,(255,0,255),3)
             param = cv.arcLength(cnt,True)  
             aprox = cv.approxPolyDP(cnt,0.02*param,True) #its a array .inside this array we have all the individual corner values  
             x, y, w, h = cv.boundingRect(aprox) #it will help to create a box aroud the shape for detect the shape it has 4 values
-
+    return x+w//2 , y
 
 while True:
     isTrue, img = cap.read()
