@@ -8,7 +8,7 @@ myColors = [[0,100,53,56,255,255], #orange [0] =name 1:4 => h_min-s_min-v_min 4:
             [39,119,0,179,255,255],    
             [24,48,0,107,113,95]]
 
-ColorCode  = [[0,0,255],[255,165,0],[0,128,0]] #orange blue green
+ColorCode  = [[255,165,0],[0,0,255],[0,128,0]] #orange blue green
 
 myPoints = []  #x,y,colorindex
 
@@ -27,7 +27,6 @@ def findColors(img,myColors,pointColor):
         if x!=0 and y != 0:
             newPoints.append([x,y,counter])
         counter +=1
-    print(newPoints)
     return newPoints
 
 #Contoures method
